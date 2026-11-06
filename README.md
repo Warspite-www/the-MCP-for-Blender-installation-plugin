@@ -12,7 +12,9 @@
 
 Windows 用户可以直接使用 [blender-mcp-installer-1.0.0.zip](dist/blender-mcp-installer-1.0.0.zip)。
 
-1. 下载 ZIP，**即下载 blender-mcp-installer-1.0.0.zip ，不是整个项目的 ZIP ，不要解压**，。
+相当于是正常 blender 插件的安装流程。
+
+1. 下载 ZIP，**即下载 blender-mcp-installer-1.0.0.zip ，不是整个项目的 ZIP ，不要解压，不要解压，不要解压**。
 2. Blender 打开 **编辑 → 偏好设置 → 插件**，在右上角菜单选择 **从磁盘安装 / Install from Disk**，选择 ZIP。
 3. 启用 **MCP for Blender Installer** 并展开插件设置。
 4. 保存当前场景，勾选“我已保存场景”。需要 Codex 时保留“同时配置 Codex”；使用其他客户端时取消该选项。
@@ -31,7 +33,7 @@ Windows 用户可以直接使用 [blender-mcp-installer-1.0.0.zip](dist/blender-
 
 原始流程已在 **Windows + Blender 5.2.2 LTS + Codex CLI** 上完成安装，并通过本地 `get_addon_info` 握手验证。仓库脚本由该流程整理而来，已做 PowerShell 语法检查；它并未在一台全新 Windows 机器上完整重装验证。其他 Blender 版本的兼容性取决于上游插件。
 
-## 准备
+## 准备（不推荐使用脚本，仅供参考学习）
 
 - Windows PowerShell 5.1 或更新版本。
 - 已安装 Blender，并知道 `blender.exe` 的完整路径。
