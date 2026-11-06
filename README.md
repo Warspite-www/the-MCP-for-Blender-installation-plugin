@@ -12,6 +12,8 @@
 
 Windows 用户可以直接使用 [blender-mcp-installer-1.0.0.zip](dist/blender-mcp-installer-1.0.0.zip)。
 
+**去release下载一点麻烦，直接去 /main/addon/blender_mcp_installer 下载对应 zip**
+
 相当于是正常 blender 插件的安装流程。
 
 1. 下载 ZIP，**即下载 blender-mcp-installer-1.0.0.zip ，不是整个项目的 ZIP ，不要解压，不要解压，不要解压**。
