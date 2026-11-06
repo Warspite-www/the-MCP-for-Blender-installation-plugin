@@ -1,0 +1,16 @@
+# Local settings, credentials, logs and backups
+.env
+.env.*
+!.env.example
+config.toml
+*.bak
+*.log
+*.blend
+*.blend1
+*.blend2
+__pycache__/
+.venv/
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
