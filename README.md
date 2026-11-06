@@ -1,33 +1,31 @@
 # Windows 安装 MCP for Blender
 
-将一次 Windows 上的安装过程整理为可复用的 PowerShell 脚本：安装 `uv`、安装并启用 Blender 插件，以及为 Codex 注册 MCP 服务。
+本插件功能：一键安装 `uv`、安装并启用 Blender 插件 MCP，以及为 Codex 注册 MCP 服务，所有过程均为自动化，无需额外操作，本质是一个blender插件。
 
-这是社区安装辅助脚本，与 Blender、OpenAI 或 MCP for Blender 官方没有隶属关系。
+本插件为社区安装辅助脚本，与 Blender、OpenAI 或 MCP for Blender 官方没有隶属关系。
+
+目前只在 blender5.2.2LTS 上完成测试，其他版本尚未测试，目前只供参考学习，其他版本可能不兼容。
+
+本仓库同时提供了为 Blender 安装 MCP 服务并完成 Codex 配置的脚本，仅供参考学习。
 
 ## 推荐：在 Blender 里点击安装
 
-Windows 用户可以直接使用 [blender-mcp-installer-1.0.0.zip](dist/blender-mcp-installer-1.0.0.zip)，不需要手动运行 PowerShell 命令。
+Windows 用户可以直接使用 [blender-mcp-installer-1.0.0.zip](dist/blender-mcp-installer-1.0.0.zip)。
 
-1. 下载 ZIP，**不要解压**。
+1. 下载 ZIP，**即下载 blender-mcp-installer-1.0.0.zip ，不是整个项目的 ZIP ，不要解压**，。
 2. Blender 打开 **编辑 → 偏好设置 → 插件**，在右上角菜单选择 **从磁盘安装 / Install from Disk**，选择 ZIP。
 3. 启用 **MCP for Blender Installer** 并展开插件设置。
 4. 保存当前场景，勾选“我已保存场景”。需要 Codex 时保留“同时配置 Codex”；使用其他客户端时取消该选项。
 5. 点击 **一键安装 MCP for Blender**，等待状态提示完成。下载在后台进行，保持 Blender 打开且不要禁用安装助手。
 6. 完全重启 Codex / VS Code。Blender 3D 视图按 `N`，检查 **MCP for Blender** 标签中的服务器状态。
 
-首次导入安装助手 ZIP 仍需手动完成，之后的依赖下载、MCP 插件安装、启用和偏好设置保存由按钮完成。该助手使用当前 Blender 的用户插件目录，不会启动第二个 Blender 来覆盖正在使用的偏好设置。
+依赖下载、MCP 插件安装、启用和偏好设置保存由按钮自动完成。使用当前 Blender 的用户插件目录，不会启动第二个 Blender 来覆盖正在使用的偏好设置。
 
 安装助手当前只支持 Windows。若目标 MCP 插件已经启用，它会提示无需重复安装；更新请使用上游提供的更新方式。已有 Codex `blender` 注册项会保留，不保证其配置正确。安装失败可能已经完成部分步骤，请根据状态信息修复并重试。安装成功后可以禁用或移除 **Installer** 助手，保留目标 **MCP for Blender** 插件。
 
-公开包仅包含安装助手源码和许可证，不包含个人配置、日志或上游插件。它会联网下载执行时解析的上游版本；使用前可以审阅 `addon/blender_mcp_installer/__init__.py`。安装按钮可能运行 Astral 官方 PowerShell 安装脚本，但不更改持久执行策略。
+公开包仅包含安装源码和许可证。它会联网下载执行时解析的上游版本；使用前可以审阅 `addon/blender_mcp_installer/__init__.py`。安装按钮可能运行 Astral 官方 PowerShell 安装脚本，但不更改持久执行策略。
 
-重新生成发布 ZIP：
-
-```powershell
-python .\build_addon.py
-```
-
-下文 PowerShell 方案仍可作为独立安装方式使用。
+下文提供 PowerShell 脚本方案仍可作为独立安装方式使用**手动安装和配置，不推荐**。
 
 ## 验证范围
 
@@ -65,7 +63,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Install-BlenderMCP.ps1 -Bl
 
 如果 `blender.exe` 已在 PATH 中，可以省略 `-BlenderPath`。命令中的执行策略仅对本次 PowerShell 进程生效，不修改持久策略。
 
-## 脚本做了什么
+## 脚本功能
 
 1. 检查 Blender 路径、运行状态和 Codex 命令。
 2. 查找 `uvx.exe`；缺失时下载并运行 Astral 官方 `uv` 安装脚本。
@@ -125,11 +123,8 @@ codex mcp add blender --env DISABLE_TELEMETRY=true -- uvx mcp-for-blender
 codex mcp remove blender
 ```
 
-在 Blender 偏好设置中禁用插件并保存，然后关闭 Blender；按实际安装目录删除用户插件目录中的 `blender_mcp.py` 即可。如需恢复偏好设置，请关闭 Blender 后将备份复制回 `userpref.blend`。`uv` 可能被其他工具共用，脚本不自动卸载它。
+在 Blender 偏好设置中禁用插件并保存，然后关闭 Blender；按实际安装目录删除用户插件目录中的 `blender_mcp.py` 即可。如需恢复偏好设置，请关闭 Blender 后将备份复制回 `userpref.blend`。`uv` 可能被其他工具共用，所以脚本不自动卸载它。
 
-## 隐私与使用提示
-
-此仓库不附带个人配置、运行日志、场景或凭据。上传 GitHub 前也不要添加这些文件。运行时打印的本地路径可能包含你的用户名，分享日志时请先脱敏。
 
 Codex 注册项设置了 `DISABLE_TELEMETRY=true`，用于关闭上游 MCP 服务端遥测；这不代表控制所有客户端或第三方服务的数据行为。插件可在 Blender 内运行 Python，请先保存场景，并保持默认本地监听。
 
